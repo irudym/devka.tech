@@ -1,0 +1,3 @@
+export const CHANGE_PAGE_TITLE = 'CHANGE/PAGE_TITLE';
+export const LOGIN_USER = 'SYSTEM/LOGIN';
+export const LOGOUT_USER = 'SYSTEM/LOGOUT';

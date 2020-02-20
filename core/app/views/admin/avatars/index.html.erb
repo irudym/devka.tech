@@ -1,0 +1,148 @@
+<div>
+  <h1 class="mt-5">Avatar</h1>
+  <p class="lead">
+    Avatar related images management  
+  </p>
+  <div id="app">
+    <div class="row">
+      <div class="col-6">
+        <h4>Bodies</h4>
+        <form>
+          <div class="form-group">
+            <uploader v-model="image" id="bodies"/>
+          </div>
+          <button @click.stop.prevent="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <tableview :pictures="bodyPictures" @click="deleteBody">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <h4>Eyes</h4>
+        <form>
+          <div class="form-group">
+            <uploader v-model="eyesImage" id="eyes"/>
+          </div>
+          <button @click.stop.prevent="submitEyes" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <tableview :pictures="eyesPictures" @click="deleteEyes">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <h4>Noses</h4>
+        <form>
+          <div class="form-group">
+            <uploader v-model="nosesImage" id="eyes"/>
+          </div>
+          <button @click.stop.prevent="submitNose" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <tableview :pictures="nosesPictures" @click="deleteNose">
+      </div>
+    </div>
+
+
+
+</div>
+
+<script>
+
+var app = new Vue({
+  el: '#app',
+  data() {
+    return {
+      message: 'Hello Vue!',
+      image: null,
+      eyesImage: null,
+      bodyImages: [],
+      nosesImage: null,
+      eyesPictures: [],
+      bodyPictures: [],
+      nosesPictures: [],
+    };
+  },
+  mounted() {
+    console.log("Component mounted");
+
+    axios.get('/avatar_bodies')
+    .then((response) => {
+      this.bodyPictures = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+    axios.get('/avatar_eyes')
+    .then((response) => {
+      this.eyesPictures = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  },
+  methods: {
+    submit() {
+      console.log("Submit image: ", this.image);
+
+      axios.post('/avatar_bodies', {
+        picture: this.image,
+      })
+      .then(function (response) {
+        this.image = null;
+      })
+      .catch(function (error) {
+       console.log(error);
+      });
+    },
+
+    submitEyes() {
+      axios.post('/avatar_eyes', {
+        picture: this.eyesImage,
+      })
+      .then(function (response) {
+        this.eyesImage = null;
+      })
+      .catch(function (error) {
+       console.log(error);
+      });
+    },
+
+    deleteBody(id) {
+      console.log("DELETE BODY: ", id);
+      axios.delete(`/avatar_bodies/${id}`)
+      .then((response) => {
+        this.bodyPictures = this.bodyPictures.filter(body => body.id !== id);
+      })
+      .catch( function(error) {
+        console.log(error);
+      });
+    },
+    deleteEyes(id) {
+      console.log("DELETE BODY: ", id);
+      axios.delete(`/avatar_eyes/${id}`)
+      .then((response) => {
+        this.eyesPictures = this.eyesPictures.filter(eyes => eyes.id !== id);
+      })
+      .catch( function(error) {
+        console.log(error);
+      });
+    }
+  }
+});
+
+</script>
+</html>

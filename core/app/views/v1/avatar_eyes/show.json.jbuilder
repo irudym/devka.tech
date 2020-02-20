@@ -1,0 +1,1 @@
+json.picture @avatar_eye.picture_url
