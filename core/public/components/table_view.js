@@ -10,7 +10,7 @@ Vue.component('tableview', {
       </thead>
       <tbody>
         <tr v-for="picture in pictures" :key="picture.id">
-          <td><button class="btn btn-danger" @click="pictureDelete(body.id)">x</button></td>
+          <td><button class="btn btn-danger" @click="pictureDelete(picture.id)">x</button></td>
           <td>{{picture.id}}</td>
           <td>
             <img :src="picture.picture" alt="" class="img-thumbnail">
@@ -21,7 +21,7 @@ Vue.component('tableview', {
   `,
   props: ['pictures'],
   methods: {
-    pictureDelete(id) {
+    pictureDelete(id) {      
       this.$emit('delete', id);
     }
   }

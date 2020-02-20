@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_08_125809) do
+ActiveRecord::Schema.define(version: 2020_02_20_111759) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin", force: :cascade do |t|
     t.string "name", null: false
@@ -45,6 +45,13 @@ ActiveRecord::Schema.define(version: 2019_05_08_125809) do
     t.datetime "updated_at", null: false
     t.bigint "image_id"
     t.index ["image_id"], name: "index_avatar_eyes_on_image_id"
+  end
+
+  create_table "avatar_noses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "image_id"
+    t.index ["image_id"], name: "index_avatar_noses_on_image_id"
   end
 
   create_table "images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin", force: :cascade do |t|
@@ -86,5 +93,6 @@ ActiveRecord::Schema.define(version: 2019_05_08_125809) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "avatar_noses", "images"
   add_foreign_key "questions", "users"
 end

@@ -85,7 +85,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2018.0812)
     mimemagic (0.3.3)
-    mini_magick (4.9.3)
+    mini_magick (4.10.1)
     mini_mime (1.0.1)
     mini_portile2 (2.4.0)
     minitest (5.11.3)
@@ -186,7 +186,7 @@ DEPENDENCIES
   jwt
   listen (>= 3.0.5, < 3.2)
   mime-types
-  mini_magick (~> 4.8)
+  mini_magick (>= 4.9.4)
   mysql2
   puma (~> 3.11)
   rack-cors

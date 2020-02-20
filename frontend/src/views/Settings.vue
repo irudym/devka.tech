@@ -11,6 +11,7 @@
             <div class="col-md-6">
               <img class="avatar-body" v-for="body in bodyPictures" v-bind:src="body.picture" :key="body.id" v-show="body.id == bodyPictures[currentBody].id">
               <img class="avatar-eyes" v-for="eyes in eyesPictures" v-bind:src="eyes.picture" :key="eyes.id" v-show="eyes.id == eyesPictures[currentEyes].id">
+              <img class="avatar-eyes" v-for="nose in nosesPictures" v-bind:src="nose.picture" :key="nose.id" v-show="nose.id == nosesPictures[currentNose].id">
             </div>
             <div class="col-md-6">
               <div class="control">
@@ -49,13 +50,13 @@
                 </div>
                 <div class="row">
                   <div class="col-4">
-                    <pink-button title="<" />
+                    <pink-button title="<" @click="nosePrev"/>
                   </div>
                   <div class="col-4">
                     Нос
                   </div>
                   <div class="col-4">
-                    <pink-button title=">" />
+                    <pink-button title=">" @click="noseNext"/>
                   </div>
                 </div>
               </div>
@@ -75,11 +76,11 @@ import FloatLabel from '../components/FloatLabel.vue';
 import PinkButton from '../components/PinkButton.vue';
 import ErrorMessage from '../components/ErrorMessage.vue';
 
-import { fetchBodyImages, fetchEyesImages } from '../lib/api';
+import { fetchBodyImages, fetchEyesImages, fetchNosesImages } from '../lib/api';
 import { serverUrl } from '../config/globals';
 
 export default {
-  name: "Settings",
+  name: 'Settings',
   components: {
     FloatLabel,
     PinkButton,
@@ -91,8 +92,10 @@ export default {
       errorMessage: null,
       bodyPictures: [],
       eyesPictures: [],
+      nosesPictures: [],
       currentBody: 0,
       currentEyes: 0,
+      currentNose: 0,
       errors: {
         nickname: null,
       },
@@ -122,26 +125,38 @@ export default {
         this.currentEyes = this.eyesPictures.length - 1;
       }
     },
+    noseNext() {
+      this.currentNose += 1;
+      this.currentNose %= this.nosesPictures.length;
+    },
+    nosePrev() {
+      this.currentNose -= 1;
+      if (this.currentNose < 0) {
+        this.currentNose = this.nosesPictures.length - 1;
+      }
+    },
   },
   computed: {
     ...mapGetters(['isLogged', 'getToken']),
   },
-  mounted: async function () {
+  async mounted() {
     if (!this.isLogged) {
       this.$router.push('/login');
     }
     this.changePageTitle('Настройки');
 
-    //load images
+    // load images
     try {
       const data = await fetchBodyImages({ url: serverUrl });
       console.log("DATA: ", data);
       this.bodyPictures = [...data];
 
-      const eyes_data = await fetchEyesImages({ url: serverUrl });
-      console.log("EYES DATA: ", eyes_data);
-      this.eyesPictures = [...eyes_data];
-      
+      const eyesData = await fetchEyesImages({ url: serverUrl });
+      console.log('EYES DATA: ', eyesData);
+      this.eyesPictures = [...eyesData];
+
+      const nosesData = await fetchNosesImages({ url: serverUrl });
+      this.nosesPictures = [...nosesData];
     } catch (error) {
       console.log('Cannot load images due to error: ', error.message);
       this.errorMessage = error.message;

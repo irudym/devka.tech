@@ -1,0 +1,1 @@
+json.picture @avatar_nose.picture_url

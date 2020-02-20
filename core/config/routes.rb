@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :tags, defaults: { format: :json}
     resources :avatar_bodies, defaults: { format: :json}
     resources :avatar_eyes, defaults: { format: :json}
+    resources :avatar_noses, defaults: { format: :json}
   end
 
   scope module: :admin do

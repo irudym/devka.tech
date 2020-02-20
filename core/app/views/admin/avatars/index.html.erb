@@ -34,7 +34,7 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <tableview :pictures="eyesPictures" @click="deleteEyes">
+        <tableview :pictures="eyesPictures" @delete="deleteEyes">
       </div>
     </div>
 
@@ -43,7 +43,7 @@
         <h4>Noses</h4>
         <form>
           <div class="form-group">
-            <uploader v-model="nosesImage" id="eyes"/>
+            <uploader v-model="noseImage" id="nose"/>
           </div>
           <button @click.stop.prevent="submitNose" class="btn btn-primary">Submit</button>
         </form>
@@ -69,7 +69,7 @@ var app = new Vue({
       image: null,
       eyesImage: null,
       bodyImages: [],
-      nosesImage: null,
+      noseImage: null,
       eyesPictures: [],
       bodyPictures: [],
       nosesPictures: [],
@@ -93,6 +93,14 @@ var app = new Vue({
     .catch(function (error) {
       console.log(error);
     });
+
+    axios.get('/avatar_noses')
+    .then((response) => {
+      this.nosesPictures = response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+    })
   },
   methods: {
     submit() {
@@ -121,6 +129,18 @@ var app = new Vue({
       });
     },
 
+    submitNose() {
+      axios.post('/avatar_noses', {
+        picture: this.noseImage,
+      })
+      .then(function (response) {
+        this.noseImage = null;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    },
+
     deleteBody(id) {
       console.log("DELETE BODY: ", id);
       axios.delete(`/avatar_bodies/${id}`)
@@ -132,12 +152,22 @@ var app = new Vue({
       });
     },
     deleteEyes(id) {
-      console.log("DELETE BODY: ", id);
+      console.log("DELETE EYES: ", id);
       axios.delete(`/avatar_eyes/${id}`)
       .then((response) => {
         this.eyesPictures = this.eyesPictures.filter(eyes => eyes.id !== id);
       })
       .catch( function(error) {
+        console.log(error);
+      });
+    },
+    deleteNose(id) {
+      console.log("DELETE NOSE: ", id);
+      axios.delete(`/avatar_noses/${id}`)
+      .then((response) => {
+        this.nosesPictures = this.nosesPictures.filter(nose => nose.id !== id);
+      })
+      .catch((error) => {
         console.log(error);
       });
     }
