@@ -12,6 +12,7 @@
               <img class="avatar-body" v-for="body in bodyPictures" v-bind:src="body.picture" :key="body.id" v-show="body.id == bodyPictures[currentBody].id">
               <img class="avatar-eyes" v-for="eyes in eyesPictures" v-bind:src="eyes.picture" :key="eyes.id" v-show="eyes.id == eyesPictures[currentEyes].id">
               <img class="avatar-eyes" v-for="nose in nosesPictures" v-bind:src="nose.picture" :key="nose.id" v-show="nose.id == nosesPictures[currentNose].id">
+              <img class="avatar-eyes" v-for="hair in hairsPictures" v-bind:src="hair.picture" :key="hair.id" v-show="hair.id == hairsPictures[currentHair].id">
             </div>
             <div class="col-md-6">
               <div class="control">
@@ -28,13 +29,13 @@
                 </div>
                 <div class="row">
                   <div class="col-4">
-                    <pink-button title="<" />
+                    <pink-button title="<" @click="hairPrev"/>
                   </div>
                   <div class="col-4">
                     Прическа
                   </div>
                   <div class="col-4">
-                    <pink-button title=">" />
+                    <pink-button title=">" @click="hairNext"/>
                   </div>
                 </div>
                 <div class="row">
@@ -76,7 +77,7 @@ import FloatLabel from '../components/FloatLabel.vue';
 import PinkButton from '../components/PinkButton.vue';
 import ErrorMessage from '../components/ErrorMessage.vue';
 
-import { fetchBodyImages, fetchEyesImages, fetchNosesImages } from '../lib/api';
+import { fetchBodyImages, fetchEyesImages, fetchNosesImages, fetchHairsImages } from '../lib/api';
 import { serverUrl } from '../config/globals';
 
 export default {
@@ -93,9 +94,11 @@ export default {
       bodyPictures: [],
       eyesPictures: [],
       nosesPictures: [],
+      hairsPictures: [],
       currentBody: 0,
       currentEyes: 0,
       currentNose: 0,
+      currentHair: 0,
       errors: {
         nickname: null,
       },
@@ -135,6 +138,16 @@ export default {
         this.currentNose = this.nosesPictures.length - 1;
       }
     },
+    hairNext() {
+      this.currentHair += 1;
+      this.currentHair %= this.hairsPictures.length;
+    },
+    hairPrev() {
+      this.currentHair -= 1;
+      if (this.currentHair < 0) {
+        this.currentHair = this.hairsPictures.length - 1;
+      }
+    },
   },
   computed: {
     ...mapGetters(['isLogged', 'getToken']),
@@ -157,6 +170,9 @@ export default {
 
       const nosesData = await fetchNosesImages({ url: serverUrl });
       this.nosesPictures = [...nosesData];
+
+      const hairsData = await fetchHairsImages({ url: serverUrl });
+      this.hairsPictures = [...hairsData];
     } catch (error) {
       console.log('Cannot load images due to error: ', error.message);
       this.errorMessage = error.message;

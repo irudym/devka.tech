@@ -85,3 +85,16 @@ export const fetchNosesImages = async ({ url }) => {
   }
   return response.data;
 };
+
+/**
+ * Fetch hairs images data from a server
+ * @param {url} API server address
+ * @return an array of objects which contains image id and url
+ */
+export const fetchHairsImages = async ({ url }) => {
+  const response = await axios.get(`${url}/avatar_hairs`);
+  if (response.status !== 200) {
+    return constructError(response);
+  }
+  return response.data;
+};
