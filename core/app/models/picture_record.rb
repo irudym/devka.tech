@@ -50,8 +50,9 @@ class PictureRecord < ApplicationRecord
   end
 
   def destroy
-    self.image.destroy
+    img = self.image
     super
+    img.destroy
   end
 
 end

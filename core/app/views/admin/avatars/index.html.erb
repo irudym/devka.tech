@@ -17,7 +17,7 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <tableview :pictures="bodyPictures" @click="deleteBody">
+        <tableview :pictures="bodyPictures" @delete="deleteBody">
       </div>
     </div>
 
@@ -51,7 +51,24 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <tableview :pictures="nosesPictures" @click="deleteNose">
+        <tableview :pictures="nosesPictures" @delete="deleteNose">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <h4>Hairs</h4>
+        <form>
+          <div class="form-group">
+            <uploader v-model="hairImage" id="hair"/>
+          </div>
+          <button @click.stop.prevent="submitHair" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <tableview :pictures="hairsPictures" @delete="deleteHair">
       </div>
     </div>
 
@@ -70,9 +87,11 @@ var app = new Vue({
       eyesImage: null,
       bodyImages: [],
       noseImage: null,
+      hairImage: null,
       eyesPictures: [],
       bodyPictures: [],
       nosesPictures: [],
+      hairsPictures: [],
     };
   },
   mounted() {
@@ -97,6 +116,14 @@ var app = new Vue({
     axios.get('/avatar_noses')
     .then((response) => {
       this.nosesPictures = response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+    axios.get('/avatar_hairs')
+    .then((response) => {
+      this.hairsPictures = response.data;
     })
     .catch((error) => {
       console.log(error);
@@ -140,6 +167,18 @@ var app = new Vue({
         console.log(error);
       });
     },
+    
+    submitHair() {
+      axios.post('/avatar_hairs', {
+        picture: this.hairImage,
+      })
+      .then(function (response) {
+        this.hairImage = null;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    },
 
     deleteBody(id) {
       console.log("DELETE BODY: ", id);
@@ -170,7 +209,17 @@ var app = new Vue({
       .catch((error) => {
         console.log(error);
       });
-    }
+    },
+    deleteHair(id) {
+      console.log("DELETE HAIR: ", id);
+      axios.delete(`/avatar_hairs/${id}`)
+      .then((response) => {
+        this.hairsPictures = this.hairsPictures.filter(hair => hair.id !== id);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    },
   }
 });
 

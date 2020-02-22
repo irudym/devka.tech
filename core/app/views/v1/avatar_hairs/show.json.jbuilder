@@ -1,0 +1,1 @@
+json.picture @avatar_hair.picture_url

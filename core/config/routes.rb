@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :avatar_bodies, defaults: { format: :json}
     resources :avatar_eyes, defaults: { format: :json}
     resources :avatar_noses, defaults: { format: :json}
+    resources :avatar_hairs, defaults: { format: :json}
   end
 
   scope module: :admin do
