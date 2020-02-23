@@ -41,14 +41,14 @@ import ErrorMessage from '../components/ErrorMessage.vue';
 import { createQuestion } from '@/lib/api';
 
 export default {
-  name: "AskQuestion",
+  name: 'AskQuestion',
   components: {
     FloatLabel,
     TagInput,
     PinkButton,
     ErrorMessage,
   },
-  data: function () {
+  data() {
     return {
       title: '',
       description: '',
@@ -88,16 +88,17 @@ export default {
         const { title, description, tags } = this;
 
         try {
-          const response = await createQuestion({ url: '//127.0.0.1:3030',
+          const response = await createQuestion({
+            url: '//127.0.0.1:3030',
             question: {
               title,
               description,
-              tags
+              tags,
             },
             token: this.getToken,
           });
           this.errorMessage = null;
-          
+
           // TODO: need to route to question view (with comments)
           this.$router.push('/');
         } catch (error) {
@@ -111,14 +112,14 @@ export default {
   computed: {
     ...mapGetters(['isLogged', 'getToken']),
   },
-  mounted: function () {
+  mounted() {
     console.log('Ask question mounted');
     console.log('Is logged: ', this.isLogged);
 
     if (!this.isLogged) {
       this.$router.push('/login');
     }
-    
+
     this.changePageTitle('Задать вопрос');
   },
 };

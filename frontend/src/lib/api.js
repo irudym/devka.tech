@@ -1,7 +1,7 @@
+import { constructError } from './errors';
 /* eslint-disable import/prefer-default-export */
 const axios = require('axios');
 
-import { constructError } from './errors';
 
 export const signup = async ({ url, user }) => {
   try {
@@ -41,6 +41,14 @@ export const createQuestion = async ({ url, question, token }) => {
 
 export const fetchQuestions = async ({ url, token }) => {
   const response = await axios.get(`${url}/questions`);
+  if (response.status !== 200) {
+    return constructError(response);
+  }
+  return response.data;
+};
+
+export const fetchUserQuestions = async ({ url, user_id }) => {
+  const response = await axios.get(`${url}/questions/users/${user_id}`);
   if (response.status !== 200) {
     return constructError(response);
   }

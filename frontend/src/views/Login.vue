@@ -30,8 +30,8 @@ export default {
     PinkButton,
     ErrorMessage,
   },
-  data: function () {
-    return  {
+  data() {
+    return {
       email: '',
       password: '',
       errorMessage: null,
@@ -53,7 +53,7 @@ export default {
       }
       if (Object.keys(errors).length !== 0) {
         // show errors
-        this.errors = errors;        
+        this.errors = errors;
         return errors;
       }
       return null;
@@ -64,7 +64,8 @@ export default {
         // submit
         const { email, password } = this;
         try {
-          const response = await login({ url: '//127.0.0.1:3030',
+          const response = await login({
+            url: '//127.0.0.1:3030',
             credentials: {
               email,
               password,
@@ -78,9 +79,10 @@ export default {
             email,
             auth_token: response.auth_token,
             nickname: response.nickname,
+            id: response.id,
           };
           this.loginUser(user);
-          
+
           // go back
           this.$router.go(-1);
         } catch (error) {
@@ -91,10 +93,9 @@ export default {
       }
     },
   },
-  mounted: function () {
+  mounted() {
     this.changePageTitle('Вход');
-    console.log("ROUTER: ", this.$router);
-    
+    console.log('ROUTER: ', this.$router);
   },
 };
 </script>

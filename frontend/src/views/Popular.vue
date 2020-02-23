@@ -20,7 +20,7 @@ export default {
   components: {
     QuestionCard,
   },
-  data: function () {
+  data() {
     return {
       questions: [
         {
@@ -32,9 +32,9 @@ export default {
           comments: 2,
           views: 4,
           stars: 2,
-          tags: [{id: 1, text: 'github'}, {id:2, text: 'dev'}, {id: 3, text: 'ногти'}, 
-          {id: 4, text: 'ruby'}, {id: 5, text: 'javascript'}],
-          user: {id: 1, nickname: '__anuka__'},
+          tags: [{ id: 1, text: 'github' }, { id: 2, text: 'dev' }, { id: 3, text: 'ногти' },
+            { id: 4, text: 'ruby' }, { id: 5, text: 'javascript' }],
+          user: { id: 1, nickname: '__anuka__' },
           created_at: '22/03/2019',
         },
         {
@@ -46,8 +46,8 @@ export default {
           comments: 10,
           views: 30,
           stars: 4,
-          tags: [{id: 6, text: 'python'}, {id: 7, text: 'ногти'}],
-          user: {id: 2, nickname: 'dev_chushka'},
+          tags: [{ id: 6, text: 'python' }, { id: 7, text: 'ногти' }],
+          user: { id: 2, nickname: 'dev_chushka' },
           created_at: '22/03/2019',
         },
       ],
@@ -56,13 +56,13 @@ export default {
   methods: {
     ...mapActions(['changePageTitle', 'getToken']),
   },
-  mounted: async function () {
+  async mounted() {
     console.log('Popular mounted');
     this.changePageTitle('Популярные вопросы');
 
     // fetch questions
     try {
-      const data = await fetchQuestions({ url: serverUrl, token: this.getToken });      
+      const data = await fetchQuestions({ url: serverUrl, token: this.getToken });
       this.questions = [...data];
     } catch (error) {
       console.log('Cannot load questions due to error: ', error.message);

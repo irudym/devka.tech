@@ -5,6 +5,7 @@ import AskQuestion from '../views/AskQuestion.vue';
 import Registration from '../views/Registration.vue';
 import Login from '../views/Login.vue';
 import Settings from '../views/Settings.vue';
+import My from '../views/My.vue';
 
 Vue.use(Router);
 
@@ -16,6 +17,11 @@ export default new Router({
       path: '/',
       name: 'popular',
       component: Popular,
+    },
+    {
+      path: '/my',
+      name: 'my',
+      component: My,
     },
     {
       path: '/about',

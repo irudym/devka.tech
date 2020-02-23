@@ -13,6 +13,12 @@ class V1::QuestionsController < ApplicationController
     @questions = Question.all
   end
 
+  def users
+    user = User.find(params[:user_id])
+    @questions = user.questions
+    render :index, status: 200
+  end
+
   private
 
   def question_params

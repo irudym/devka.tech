@@ -34,11 +34,11 @@ export default {
     Pill,
   },
   methods: {
-    handlePillClick: function (tag) {
-      console.log("Click on TAG: ", tag);
-      //route to /tags/${tag}
-    }
-  }
+    handlePillClick(tag) {
+      console.log('Click on TAG: ', tag);
+      // route to /tags/${tag}
+    },
+  },
 };
 </script>
 
@@ -51,7 +51,7 @@ export default {
 }
 
 .card {
-  padding: 0 10px; 
+  padding: 0 10px;
 }
 
 .info-box {

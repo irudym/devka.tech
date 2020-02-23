@@ -18,10 +18,10 @@ export default {
     },
   },
   methods: {
-    clickOnPill () {
+    clickOnPill() {
       this.$emit('close', this.text);
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -3,7 +3,7 @@
     <div class="col">
       <div class="error-message">
         {{message}}
-      </div> 
+      </div>
     </div>
   </div>
 </template>
@@ -15,8 +15,8 @@ export default {
   name: 'ErrorMessage',
   props: {
     message: String,
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>

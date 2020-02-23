@@ -26,17 +26,17 @@ export default {
       default: () => [],
     },
   },
-  data: function () {
+  data() {
     return {
       pills: [],
       tagText: '',
     };
   },
   methods: {
-    focus () {
+    focus() {
       this.$emit('focus');
     },
-    blur () {
+    blur() {
       this.$emit('blur');
     },
     addPill() {
@@ -50,18 +50,18 @@ export default {
       this.$refs.tagInput.value = ' ';
     },
     clear() {
-      console.log("CALL CLEAR");
+      console.log('CALL CLEAR');
       this.tagText = '';
       this.$refs.tagInput.value = '';
     },
     removeTag(tag) {
-      console.log("Remove tag: ", tag);
+      console.log('Remove tag: ', tag);
       this.pills = this.pills.filter(pill => pill !== tag);
       // update input
       this.$emit('input', this.pills);
     },
     removeLastPill() {
-      //in case input in empty
+      // in case input in empty
       if (this.tagText === '') {
         const text = this.pills[this.pills.length - 1];
         this.pills = this.pills.slice(0, this.pills.length - 1);
@@ -69,7 +69,7 @@ export default {
         this.tagText = text;
         this.$emit('input', this.pills);
       }
-    }
+    },
   },
 };
 </script>

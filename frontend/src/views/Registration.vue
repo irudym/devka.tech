@@ -46,8 +46,8 @@ export default {
     PinkButton,
     ErrorMessage,
   },
-  data: function () {
-    return  {
+  data() {
+    return {
       firstName: '',
       secondName: '',
       nickname: '',
@@ -62,16 +62,16 @@ export default {
         password: null,
       },
     };
-  }, 
+  },
   methods: {
     ...mapActions(['changePageTitle', 'loginUser']),
     validate() {
-      const errors={};
+      const errors = {};
       if (!this.nickname.trim()) {
         errors.nickname = 'Пожалуйста, укажите nickname, который будет вас идентифицировать';
       }
       if (!this.password.trim()) {
-        console.log("REG: password error");
+        console.log('REG: password error');
         errors.password = 'Пароль не может быть пустым!';
       }
       if (!this.email.trim()) {
@@ -88,7 +88,9 @@ export default {
       if (!this.validate()) {
         this.errors = {};
         // signup the user
-        const { firstName, secondName, nickname, email, password } = this;
+        const {
+          firstName, secondName, nickname, email, password,
+        } = this;
         try {
           const response = await signup({
             url: '//127.0.0.1:3030',
@@ -98,13 +100,13 @@ export default {
               nickname,
               email,
               password,
-            }
+            },
           });
           console.log('User created: ', response);
           // login the user
-          this.loginUser({...response, email});
+          this.loginUser({ ...response, email });
 
-          //TODO:: go somewhere
+          // TODO:: go somewhere
           // go back ?
           this.$router.go(-1);
         } catch (error) {
@@ -115,7 +117,7 @@ export default {
       }
     },
   },
-  mounted: function () {
+  mounted() {
     this.changePageTitle('Регистрация');
   },
 };

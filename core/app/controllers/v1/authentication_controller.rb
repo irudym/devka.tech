@@ -5,8 +5,9 @@ class V1::AuthenticationController < ApplicationController
   def authenticate
     # sleep 5
     auth_token = AuthenticateUser.new(auth_params[:email], auth_params[:password]).call
-    nickname = User.find_by(email:auth_params[:email]).nickname
-    json_response({ auth_token: auth_token, nickname: nickname })
+    user = User.find_by(email:auth_params[:email])
+    puts "USER: #{user.id}"
+    json_response({ auth_token: auth_token, nickname: user.nickname, id: user.id })
   end
 
   private
