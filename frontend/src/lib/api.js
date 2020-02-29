@@ -56,6 +56,19 @@ export const fetchUserQuestions = async ({ url, user_id }) => {
 };
 
 /**
+ * Fetch questions with the provided Tag 
+ * @param {*} url - Server URL
+ * @param {*} tag - question tag text
+ */
+export const fetchTaggedQuestions = async ({ url, tag }) => {
+  const response = await axios.get(`${url}/questions/tags/${tag}`);
+  if (response.status !== 200) {
+    return constructError(response);
+  }
+  return response.data;
+};
+
+/**
  * Fetch body images data from server
  * @param {url} API server address
  * @return array of objects which contains image id and url

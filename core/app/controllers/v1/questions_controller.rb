@@ -19,6 +19,12 @@ class V1::QuestionsController < ApplicationController
     render :index, status: 200
   end
 
+  def tags
+    tag = Tag.where(text: params[:tag]).first
+    @questions = tag.questions
+    render :index, status: 200
+  end
+
   private
 
   def question_params

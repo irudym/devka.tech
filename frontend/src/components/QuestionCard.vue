@@ -14,7 +14,7 @@
           {{question.description}}
         </div>
         <div class="tag-holder">
-          <pill v-for="tag in question.tags" :key="tag.id" v-bind:text="tag.text" @click="handlePillClick" />
+          <pill v-for="tag in question.tags" :key="tag.id" v-bind:text="tag.text" @click="handlePillClick(tag)" />
         </div>
     </div>
   </div>
@@ -36,6 +36,7 @@ export default {
   methods: {
     handlePillClick(tag) {
       console.log('Click on TAG: ', tag);
+      this.$router.push({ name: 'tags', params: { tag: tag.text } });
       // route to /tags/${tag}
     },
   },

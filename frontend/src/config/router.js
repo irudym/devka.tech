@@ -6,6 +6,7 @@ import Registration from '../views/Registration.vue';
 import Login from '../views/Login.vue';
 import Settings from '../views/Settings.vue';
 import My from '../views/My.vue';
+import Tags from '../views/Tags.vue';
 
 Vue.use(Router);
 
@@ -50,6 +51,12 @@ export default new Router({
       path: '/settings',
       name: 'settings',
       component: Settings,
+    },
+    {
+      path: '/tags/:tag',
+      name: 'tags',
+      component: Tags,
+      props: true,
     },
   ],
 });

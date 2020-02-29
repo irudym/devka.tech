@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     post 'login', to: 'authentication#authenticate'
 
     get 'questions/users/:user_id' => 'questions#users', defaults: { format: :json }
+    get 'questions/tags/:tag' => 'questions#tags', defaults: { format: :json }
     resources :questions, defaults: { format: :json }
     resources :tags, defaults: { format: :json}
     resources :avatar_bodies, defaults: { format: :json}
